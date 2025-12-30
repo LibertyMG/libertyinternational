@@ -1,18 +1,24 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import singaporeImage from "@/assets/singapore-skyline.jpg";
+import australiaImage from "@/assets/australia-sydney.jpg";
+import dubaiImage from "@/assets/dubai-skyline.jpg";
 
 const markets = [
   {
     name: "Singapore",
+    image: singaporeImage,
     description: "Asia's pre-eminent financial centre with a transparent legal system, sophisticated wealth management infrastructure and preferential access to ASEAN growth markets.",
   },
   {
     name: "Australia",
+    image: australiaImage,
     description: "Stable, transparent jurisdiction with deep capital markets, strong rule of law, a large superannuation system and growing private capital and family office sector.",
   },
   {
     name: "United Arab Emirates",
+    image: dubaiImage,
     description: "Strategic bridge between East and West with world-class free zones, competitive tax regimes, growing family office ecosystem and strong connectivity to Middle East and African capital.",
   },
 ];
@@ -44,12 +50,23 @@ const MarketsSection = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="relative group"
+              className="group relative overflow-hidden rounded-xl"
             >
-              <div className="h-full p-8 md:p-10 bg-card rounded-xl border border-border/30 hover:border-border/50 transition-all duration-500">
+              {/* Image */}
+              <div className="aspect-[4/3] overflow-hidden">
+                <img 
+                  src={market.image} 
+                  alt={market.name}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+              </div>
+              
+              {/* Content overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                 <div className="text-label text-muted-foreground mb-2">0{index + 1}</div>
-                <h3 className="font-heading text-2xl md:text-3xl text-foreground mb-6">{market.name}</h3>
-                <p className="text-body text-sm text-muted-foreground">{market.description}</p>
+                <h3 className="font-heading text-2xl md:text-3xl text-foreground mb-4">{market.name}</h3>
+                <p className="text-body text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-500">{market.description}</p>
               </div>
             </motion.div>
           ))}

@@ -61,12 +61,14 @@ const MarketsSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
               </div>
               
+              {/* Index label — pinned top-left so it always shows regardless of title length */}
+              <div className="absolute top-5 left-6 md:top-6 md:left-8 z-10 text-label text-white/80 [text-shadow:_0_1px_6px_rgb(0_0_0_/_70%)]">0{index + 1}</div>
+
               {/* Content overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                <div className="text-label text-muted-foreground mb-2">0{index + 1}</div>
                 <h3 className="font-heading text-2xl md:text-3xl text-foreground mb-4">{market.name}</h3>
                 {/* Visible by default on touch devices; reveal on hover on desktop */}
-                <p className="text-body text-sm text-muted-foreground opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">{market.description}</p>
+                <p className="text-body text-sm text-muted-foreground transition-all duration-500 opacity-100 md:max-h-0 md:opacity-0 md:overflow-hidden md:group-hover:max-h-48 md:group-hover:opacity-100">{market.description}</p>
               </div>
             </motion.div>
           ))}

@@ -42,7 +42,7 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-// ─────────────────────────────────────────────────────────────────────────────
+// ──────────────────────────────────────────────────────────────────────────────
 // Web3Forms sends every submission straight to your inbox — no server needed.
 // Submissions arrive at mel@libertyinternational.com.au (the address this key
 // is registered to). This key is designed to be public, so it's safe in code.
@@ -229,7 +229,7 @@ const ContactForm = () => {
         <Button
           type="submit"
           disabled={form.formState.isSubmitting}
-          className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 text-label"
+          className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 text-sm uppercase tracking-[0.2em] font-medium"
         >
           {form.formState.isSubmitting ? (
             <span className="flex items-center gap-2">

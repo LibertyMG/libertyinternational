@@ -44,12 +44,10 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Web3Forms sends every submission straight to your inbox — no server needed.
-// 1. Go to https://web3forms.com and enter  mel@libertyinternational.com.au
-// 2. Web3Forms emails an access key to that address — paste it below.
-// Submissions then arrive at mel@libertyinternational.com.au automatically.
-// This key is designed to be public, so it's safe to keep in the code.
+// Submissions arrive at mel@libertyinternational.com.au (the address this key
+// is registered to). This key is designed to be public, so it's safe in code.
 // ─────────────────────────────────────────────────────────────────────────────
-const WEB3FORMS_ACCESS_KEY = "PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE";
+const WEB3FORMS_ACCESS_KEY = "edf9924d-3be0-4c32-94e9-79c0e32d9afe";
 
 const ContactForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);

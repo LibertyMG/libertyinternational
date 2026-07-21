@@ -146,7 +146,9 @@
   }
 
   .section-padding {
-    @apply py-12 md:py-16 px-6 md:px-12 lg:px-20;
+    /* Extra top padding clears the fixed header so a tab's heading is never
+       hidden behind it, even when the section is taller than the viewport */
+    @apply pt-28 pb-16 px-6 md:px-12 lg:px-20;
     /* Each section fills the screen so a tab always occupies the full view */
     min-height: 100svh;
     display: flex;

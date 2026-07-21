@@ -4,12 +4,12 @@ import heroImage from "@/assets/hero-skyline.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img 
-          src={heroImage} 
-          alt="Global financial district" 
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+      {/* Background Image (decorative — sits behind an 80% overlay) */}
+      <div className="absolute inset-0" aria-hidden="true">
+        <img
+          src={heroImage}
+          alt=""
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-background/80" />
@@ -32,14 +32,14 @@ const HeroSection = () => {
             transition={{ duration: 1.2, delay: 0.2 }}
           />
 
-          <motion.p
+          <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
             className="text-body text-muted-foreground max-w-3xl mx-auto mb-6"
           >
             Cross-border advisory for fund managers, family offices and private enterprises
-          </motion.p>
+          </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
@@ -70,21 +70,22 @@ const HeroSection = () => {
             </a>
           </motion.div>
         </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="w-px h-16 bg-gradient-to-b from-transparent via-muted-foreground to-transparent"
-          />
-        </motion.div>
       </div>
+
+      {/* Scroll indicator — anchored to the section so it sits at the true bottom */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.5 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+        aria-hidden="true"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-px h-16 bg-gradient-to-b from-transparent via-muted-foreground to-transparent"
+        />
+      </motion.div>
     </section>
   );
 };

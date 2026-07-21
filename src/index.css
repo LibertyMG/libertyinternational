@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
+/* Fonts are loaded via <link> tags in index.html for faster, non-render-blocking delivery */
 
 @layer base {
   :root {
@@ -87,9 +87,30 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor scrolling so the fixed header doesn't cover section tops */
+    scroll-padding-top: 6rem;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
+  }
+
+  /* Respect users who prefer reduced motion: disable smooth scroll and animations */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -112,7 +133,7 @@
 
   .text-body {
     font-family: var(--font-body);
-    @apply text-base md:text-lg font-light leading-relaxed;
+    @apply text-base md:text-lg font-normal leading-relaxed;
   }
 
   .text-label {

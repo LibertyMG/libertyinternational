@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,9 +42,20 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Web3Forms sends every submission straight to your inbox — no server needed.
+// 1. Go to https://web3forms.com and enter  mel@libertyinternational.com.au
+// 2. Web3Forms emails an access key to that address — paste it below.
+// Submissions then arrive at mel@libertyinternational.com.au automatically.
+// This key is designed to be public, so it's safe to keep in the code.
+// ─────────────────────────────────────────────────────────────────────────────
+const WEB3FORMS_ACCESS_KEY = "PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE";
+
 const ContactForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  // Honeypot: real users leave this empty; bots tend to fill every field.
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -57,18 +68,42 @@ const ContactForm = () => {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    // For now, we'll simulate a submission
-    // In production, this would call a Supabase edge function
+    // Silently drop obvious bot submissions (honeypot was filled)
+    if (honeypotRef.current?.value) {
+      setIsSubmitted(true);
+      return;
+    }
+
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `New website enquiry from ${data.name}`,
+          from_name: "Liberty International Website",
+          name: data.name,
+          email: data.email,
+          company: data.company || "Not provided",
+          message: data.message,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message || "Submission failed");
+      }
+
       setIsSubmitted(true);
       toast({
         title: "Message sent successfully",
         description: "We'll get back to you as soon as possible.",
       });
-      
+
       // Reset form after 3 seconds
       setTimeout(() => {
         setIsSubmitted(false);
@@ -77,7 +112,7 @@ const ContactForm = () => {
     } catch (error) {
       toast({
         title: "Error sending message",
-        description: "Please try again or contact us directly via email.",
+        description: "Please try again or email us directly at mel@libertyinternational.com.au",
         variant: "destructive",
       });
     }
@@ -104,6 +139,17 @@ const ContactForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {/* Honeypot anti-spam field — hidden from real users */}
+        <input
+          ref={honeypotRef}
+          type="text"
+          name="botcheck"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="hidden"
+        />
+
         <div className="grid md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
@@ -114,6 +160,7 @@ const ContactForm = () => {
                 <FormControl>
                   <Input
                     placeholder="Your name"
+                    autoComplete="name"
                     className="bg-background border-border focus:border-primary h-12"
                     {...field}
                   />
@@ -133,6 +180,7 @@ const ContactForm = () => {
                   <Input
                     type="email"
                     placeholder="your@email.com"
+                    autoComplete="email"
                     className="bg-background border-border focus:border-primary h-12"
                     {...field}
                   />
@@ -152,6 +200,7 @@ const ContactForm = () => {
               <FormControl>
                 <Input
                   placeholder="Your company name"
+                  autoComplete="organization"
                   className="bg-background border-border focus:border-primary h-12"
                   {...field}
                 />

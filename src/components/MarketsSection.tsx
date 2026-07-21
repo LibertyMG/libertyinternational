@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import singaporeImage from "@/assets/singapore-skyline.jpg";
 import australiaImage from "@/assets/australia-sydney.jpg";
@@ -66,7 +65,8 @@ const MarketsSection = () => {
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                 <div className="text-label text-muted-foreground mb-2">0{index + 1}</div>
                 <h3 className="font-heading text-2xl md:text-3xl text-foreground mb-4">{market.name}</h3>
-                <p className="text-body text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-500">{market.description}</p>
+                {/* Visible by default on touch devices; reveal on hover on desktop */}
+                <p className="text-body text-sm text-muted-foreground opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">{market.description}</p>
               </div>
             </motion.div>
           ))}

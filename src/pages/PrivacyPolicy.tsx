@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import logo from "@/assets/liberty-logo.png";
+import logo from "@/assets/logo";
 
 const LAST_UPDATED = "21 July 2026";
 

@@ -3,7 +3,7 @@ import logo from "@/assets/liberty-logo.png";
 
 const Footer = () => {
   return (
-    <footer className="py-12 px-6 md:px-12 lg:px-20 bg-secondary/30 border-t border-border/30">
+    <footer className="py-12 px-6 md:px-12 lg:px-20 bg-secondary/30 border-t border-border/30 snap-start">
       <div className="container-content">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <img src={logo} alt="Liberty International" className="h-10" />

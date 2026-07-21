@@ -4,7 +4,7 @@ import heroImage from "@/assets/hero-skyline.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden snap-start">
       {/* Background Image (decorative — sits behind an 80% overlay) */}
       <div className="absolute inset-0" aria-hidden="true">
         <img

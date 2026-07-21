@@ -7,13 +7,18 @@ const navItems = [
   { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
   { name: "Markets", href: "#markets" },
+  { name: "Approach", href: "#approach" },
   { name: "Who We Serve", href: "#clients" },
+  { name: "Why Partner", href: "#why-partner" },
   { name: "Contact", href: "#contact" },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState(
+    typeof window !== "undefined" ? window.location.hash : ""
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +26,13 @@ const Header = () => {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Track the current section so the matching nav item can be highlighted
+  useEffect(() => {
+    const onHashChange = () => setActiveHash(window.location.hash);
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
   // Close the mobile menu on Escape, and lock body scroll while it is open
@@ -39,10 +51,12 @@ const Header = () => {
     };
   }, [isMobileMenuOpen]);
 
-  const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const goHome = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.location.hash = "";
+    setActiveHash("");
+    window.scrollTo({ top: 0 });
   };
 
   return (
@@ -58,17 +72,20 @@ const Header = () => {
     >
       <div className="container-content">
         <div className="flex items-center justify-between py-4 px-6 md:px-12 lg:px-20">
-          <a href="#" onClick={scrollToTop} className="flex items-center" aria-label="Liberty International — back to top">
+          <a href="#" onClick={goHome} className="flex items-center" aria-label="Liberty International — home">
             <img src={logo} alt="Liberty International" className="h-12 md:h-14" />
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-10">
+          <nav className="hidden lg:flex items-center gap-6">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-label text-muted-foreground hover:text-foreground transition-colors duration-300"
+                aria-current={activeHash === item.href ? "page" : undefined}
+                className={`text-label transition-colors duration-300 hover:text-foreground ${
+                  activeHash === item.href ? "text-foreground" : "text-muted-foreground"
+                }`}
               >
                 {item.name}
               </a>
@@ -108,7 +125,10 @@ const Header = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-label text-muted-foreground hover:text-foreground py-3 transition-colors duration-300"
+                  aria-current={activeHash === item.href ? "page" : undefined}
+                  className={`text-label py-3 transition-colors duration-300 hover:text-foreground ${
+                    activeHash === item.href ? "text-foreground" : "text-muted-foreground"
+                  }`}
                 >
                   {item.name}
                 </motion.a>

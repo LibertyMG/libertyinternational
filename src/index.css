@@ -91,8 +91,6 @@
     scroll-behavior: smooth;
     /* Offset anchor scrolling so the fixed header doesn't cover section tops */
     scroll-padding-top: 6rem;
-    /* Snap so each section settles one at a time instead of a continuous scroll */
-    scroll-snap-type: y mandatory;
   }
 
   body {
@@ -149,13 +147,11 @@
 
   .section-padding {
     @apply py-12 md:py-16 px-6 md:px-12 lg:px-20;
-    /* Each section fills the screen and is a snap target, so navigating lands
-       squarely on one section instead of bleeding into the next */
+    /* Each section fills the screen so a tab always occupies the full view */
     min-height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    scroll-snap-align: start;
   }
 
   .container-content {

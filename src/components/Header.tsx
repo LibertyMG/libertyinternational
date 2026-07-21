@@ -77,13 +77,13 @@ const Header = () => {
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-3 lg:gap-4 xl:gap-6">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 aria-current={activeHash === item.href ? "page" : undefined}
-                className={`text-label transition-colors duration-300 hover:text-foreground ${
+                className={`uppercase font-medium whitespace-nowrap transition-colors duration-300 hover:text-foreground text-xs tracking-wider xl:text-sm xl:tracking-[0.2em] ${
                   activeHash === item.href ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
@@ -95,7 +95,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="xl:hidden p-2 text-foreground"
+            className="md:hidden p-2 text-foreground"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-navigation"
@@ -114,7 +114,7 @@ const Header = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="xl:hidden bg-background border-t border-border/30"
+            className="md:hidden bg-background border-t border-border/30"
           >
             <nav className="flex flex-col py-6 px-6">
               {navItems.map((item, index) => (

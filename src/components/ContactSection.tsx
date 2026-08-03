@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Mail, Phone } from "lucide-react";
+import { Mail } from "lucide-react";
 import ContactForm from "./ContactForm";
 
 const ContactSection = () => {
@@ -69,32 +69,7 @@ const ContactSection = () => {
                     <span className="text-body">mel@libertyinternational.com.au</span>
                   </a>
                   
-                  <a
-                    href="tel:+6588798006"
-                    className="flex items-center gap-4 text-muted-foreground hover:text-foreground transition-colors duration-300 group"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center group-hover:bg-accent transition-colors duration-300">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-body">+65 8879 8006</span>
-                      <span className="text-label text-xs text-muted-foreground ml-2">(Singapore)</span>
-                    </div>
-                  </a>
-                  
-                  <a
-                    href="tel:+61414624103"
-                    className="flex items-center gap-4 text-muted-foreground hover:text-foreground transition-colors duration-300 group"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center group-hover:bg-accent transition-colors duration-300">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-body">+61 414 624 103</span>
-                      <span className="text-label text-xs text-muted-foreground ml-2">(Australia)</span>
-                    </div>
-                  </a>
-                </div>
+              </div>
               </div>
             </div>
           </motion.div>
